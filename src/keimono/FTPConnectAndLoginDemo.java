@@ -13,9 +13,9 @@ public class FTPConnectAndLoginDemo {
         }
     }
     public static void main(String[] args) {
-        String server = "";
+        String server = "34.218.218.184";
         int port = 21;
-        String user = "";
+        String user = "anonymous";
         String pass = "";
         FTPClient ftpClient = new FTPClient();
         try {
