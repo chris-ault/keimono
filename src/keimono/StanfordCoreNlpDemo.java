@@ -1,4 +1,4 @@
-package src.keimono;
+package keimono;
 
 import java.io.*;
 import java.util.*;
@@ -19,7 +19,8 @@ import edu.stanford.nlp.util.*;
 public class StanfordCoreNlpDemo {
 
   /** Usage: java -cp "*" StanfordCoreNlpDemo [inputFile [outputTextFile [outputXmlFile]]] */
-  public static void main(String[] args) throws IOException {
+  @SuppressWarnings("deprecation")
+public static void main(String[] args) throws IOException {
     // set up optional output files
     PrintWriter out;
     if (args.length > 1) {
@@ -32,6 +33,7 @@ public class StanfordCoreNlpDemo {
       xmlOut = new PrintWriter(args[2]);
     }
 
+    String sample = "This is some text. Hopefully the processor will read this fine. I have to pee.";
     // Create a CoreNLP pipeline. To build the default pipeline, you can just use:
     //   StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
     // Here's a more complex setup example:
@@ -48,13 +50,15 @@ public class StanfordCoreNlpDemo {
     StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
     // Initialize an Annotation with some text to be annotated. The text is the argument to the constructor.
-    Annotation annotation;
-    if (args.length > 0) {
-      annotation = new Annotation(IOUtils.slurpFileNoExceptions(args[0]));
+    Annotation annotation = new Annotation(sample);
+    /*if (args.length > 0) {
+    	//annotation = new Annotation(IOUtils.slurpFileNoExceptions(args[0]));
+    	annotation = new Annotation(sample);
     } else {
-      annotation = new Annotation("Kosgi Santosh sent an email to Stanford University. He didn't get a reply.");
+    	//annotation = new Annotation("Kosgi Santosh sent an email to Stanford University. He didn't get a reply.");
+    	annotation = new Annotation(sample);
     }
-
+	*/
     // run all the selected Annotators on this text
     pipeline.annotate(annotation);
 
