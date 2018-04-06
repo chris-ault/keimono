@@ -18,8 +18,8 @@ public class FTPConnectAndLoginDemo {
     public static void main(String[] args){
         String server = "crawler.giize.com";
         int port = 21;
-        String user = "anonymous";
-        String pass = "";
+        String user = "spiderftp";
+        String pass = "hello123";
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect(server, port);

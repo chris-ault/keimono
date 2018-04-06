@@ -1,0 +1,1 @@
+4100 Words 15 Minutes = 277.6 Words per minute Using CoreNLPexample.java

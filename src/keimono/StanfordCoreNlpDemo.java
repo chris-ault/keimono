@@ -22,7 +22,9 @@ public class StanfordCoreNlpDemo {
   @SuppressWarnings("deprecation")
 public static void main(String[] args) throws IOException {
     // set up optional output files
-    PrintWriter out;
+	    StringWriter stringWriter = new StringWriter();
+	  PrintWriter out = new PrintWriter(stringWriter);
+
     if (args.length > 1) {
       out = new PrintWriter(args[1]);
     } else {
@@ -48,7 +50,7 @@ public static void main(String[] args) throws IOException {
 
     // this prints out the results of sentence analysis to file(s) in good formats
     pipeline.prettyPrint(annotation, out);
-    System.out.println(annotation); // This just prints the sentence 
+    System.out.println(annotation.toString()); // This just prints the sentence 
 
     IOUtils.closeIgnoringExceptions(out);
     IOUtils.closeIgnoringExceptions(xmlOut);
