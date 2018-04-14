@@ -12,7 +12,7 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 public class NLPPostaggerTest {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException{
-		String[] relevantWords = {"state","appealing"};
+		String[] relevantWords = {"state","appealing","spyware","problem","rescue","suffer","infection","infecting"};
 		//Initialize the tagger
 		MaxentTagger tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
 
@@ -27,7 +27,7 @@ public class NLPPostaggerTest {
 		System.out.println(article+"\n\n\n\n"+tagged);
 		Boolean good = false;
 		int positive = 0;
-		 float relevancy = 0 ;
+		 double relevancy = 0.0 ;
 		for(int i=0;i<count;i++) {										//Loop for each part
 		String[] group = tagged.split(" ");								//Separate words
 		//System.out.println(group[i]);
@@ -47,14 +47,14 @@ public class NLPPostaggerTest {
 				for(int x=0; x<relevantWords.length; ++x){
 				    if(relevantWords[x].compareTo(pos[0]) == 0){
 				   //System.out.println("Matched on "+pos[0]+" !!This is really good!!");
-				    relevancy = positive++/count;
-				    	System.out.printf("%.2f Relevancy",relevancy);
+				    relevancy = (float)positive++/(float)i*100;
+				    	System.out.printf("\t\t\t\t%.2f%% Relevancy so far\n",relevancy);
 				    }
 				}
 				good = false;
 			}
 		}
-		System.out.printf("%d occurances in %d count, %.6f Relevancy\n",positive,count,relevancy);	}
+		System.out.printf("%d occurances in %d count,\t %.2f%% Relevancy\n",positive,count,relevancy);	}
 
 	public static String RBSI(BufferedReader buffIn) throws IOException { //ReadBigStringIn
         StringBuilder everything = new StringBuilder();
