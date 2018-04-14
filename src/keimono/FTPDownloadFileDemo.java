@@ -36,7 +36,7 @@ public class FTPDownloadFileDemo {
 
             // APPROACH #1: using retrieveFile(String, OutputStream)
             String remoteFile1 = "config/sitelist.hjson";
-            File downloadFile1 = new File("C:\\Users\\Louis\\Documents\\keimono\\sitelist.hjson");
+            File downloadFile1 = new File("sitelist.hjson");
             OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
             boolean success = ftpClient.retrieveFile(remoteFile1, outputStream1);
             outputStream1.close();
@@ -45,10 +45,10 @@ public class FTPDownloadFileDemo {
                 System.out.println("File #1 has been downloaded successfully.");
             }
 
-            //2018/thehackernews.com/2010_10_100-brazilian-website-hacked-by_1522339857.html.json
+            
             // APPROACH #1: using retrieveFile(String, OutputStream)
-            remoteFile1 = "data/2018/thehackernews.com/2010_10_100-brazilian-website-hacked-by_1522339857.html.json";
-            downloadFile1 = new File("C:\\Users\\Louis\\Documents\\keimono\\2010_10_100-brazilian-website-hacked-by_1522339857.html.json");
+            remoteFile1 = "data/2018/techrepublic.com/article__1522392853.html.json";
+            downloadFile1 = new File("article__1522392853.html.json");
            outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
             success = ftpClient.retrieveFile(remoteFile1, outputStream1);
             outputStream1.close();
@@ -58,7 +58,7 @@ public class FTPDownloadFileDemo {
             }else {
             	System.out.println(success);
             }
-
+/*
             // APPROACH #2: using InputStream retrieveFileStream(String)
             String remoteFile2 = "/crawlerStartTimes.txt";
             File downloadFile2 = new File("C:\\Users\\Louis\\Documents\\keimono\\crawler2.0.txt");
@@ -76,7 +76,7 @@ public class FTPDownloadFileDemo {
             }
             outputStream2.close();
             inputStream.close();
-
+*/
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
             ex.printStackTrace();
