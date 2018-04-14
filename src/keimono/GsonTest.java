@@ -13,9 +13,9 @@ public class GsonTest {
 
         System.out.println(parse(RBSI(bufferedReader)));
 
-     
+
     }
-    
+
     public static String RBSI(BufferedReader buffIn) throws IOException { //ReadBigStringIn
         StringBuilder everything = new StringBuilder();
         String line;
@@ -24,13 +24,13 @@ public class GsonTest {
         }
         return everything.toString();
     }
-    
-    
+
+
     public static  String parse(String jsonLine) {
         JsonElement jelement = new JsonParser().parse(jsonLine);
         JsonObject  jobject = jelement.getAsJsonObject();
-        String result = jobject.get("title").getAsString();
+        String result = jobject.get("text").getAsString();
         return result;
     }
-    
+
 }
