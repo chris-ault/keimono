@@ -12,7 +12,7 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 public class NLPPostaggerTest {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException{
-		String[] relevantWords = {"state","appealing","spyware","problem","rescue","suffer","infection","infecting"};
+		String[] relevantWords = {"state","appealing","Spyware","problem","rescue","suffer","infection","infecting"};
 		//Initialize the tagger
 		MaxentTagger tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
 
@@ -45,10 +45,10 @@ public class NLPPostaggerTest {
 			}
 			if(good) {												//Good words match relevant words?
 				for(int x=0; x<relevantWords.length; ++x){
-				    if(relevantWords[x].compareTo(pos[0]) == 0){
+				    if(relevantWords[x].toLowerCase().compareTo(pos[0].toLowerCase()) == 0){
 				   //System.out.println("Matched on "+pos[0]+" !!This is really good!!");
 				    relevancy = (float)positive++/(float)i*100;
-				    	System.out.printf("\t\t\t\t%.2f%% Relevancy so far\n",relevancy);
+				    	System.out.printf("\t\t\t\t%.2f%% Relevancy so far, %d count / %d total\n",relevancy,positive,i);
 				    }
 				}
 				good = false;
