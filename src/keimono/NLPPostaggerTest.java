@@ -26,7 +26,7 @@ public class NLPPostaggerTest {
 		//
 		//These are relevant words to seek for they are all converted to lower case before comparison.
 		//
-		String[] relevantWords = {"state","appealing","Spyware","problem","rescue","suffer","infection","infecting"};
+		String[] relevantWords = {"database","state","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen"};
 			
 		//Initialize the tagger
 		MaxentTagger tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
@@ -59,8 +59,8 @@ public class NLPPostaggerTest {
                 if (file.isDirectory()) {
                     details = "[" + details + "]";
                 }
-                details += "\t\t" + file.getSize();
-                details += "\t\t" + dateFormater.format(file.getTimestamp().getTime());
+                details += "\t\t" + file.getSize()+"bytes";
+                //details += "\t\t" + dateFormater.format(file.getTimestamp().getTime());
                 System.out.println(details);
             } 
             
@@ -74,15 +74,14 @@ public class NLPPostaggerTest {
             String theFile = ""; // Not setting an an encoding for UTF-8 encoding;
             int bytesRead = -1;
             while ((bytesRead = inputStream.read(bytesArray)) != -1) {
-                //outputStream2.write(bytesArray, 0, bytesRead);
+                //outputStream2.write(bytesArray, 0, bytesRead); 				 // Don't need to save the file anymore
 
-            	theFile += new String(bytesArray, guessEncoding(bytesArray)); // This is more than likely just "UTF-8" but this is safer
+            	theFile += new String(bytesArray, guessEncoding(bytesArray)); 	// This is more than likely just "UTF-8" but this is safer
             }
-            System.out.println(guessEncoding(bytesArray));
-
+            System.out.println("\n\n---Encoding of File appears to be" + guessEncoding(bytesArray));
             boolean  success = ftpClient.completePendingCommand();
             if (success) {
-                System.out.println("File #3 has been stored as string successfully.");
+                System.out.println("\n\n---File has been stored as string successfully. String Follows...");
                 System.out.println(theFile);
             }
             //outputStream2.close();
@@ -106,7 +105,11 @@ public class NLPPostaggerTest {
         
 		String tagged = tagger.tagString(article);
 		int count = StringUtils.countMatches(tagged, "_"); 				//How many parts of speech?
-		System.out.println(article+"\n\n\n\n"+tagged);
+		System.out.println("\n\n\n---File as a string parsed for unprintables follows...");
+		System.out.println(article);
+				System.out.println("\n\n\n---Parsed article text follows...");
+		System.out.println(tagged);
+		System.out.println("\n\n---Relevancy info follows...");
 		Boolean good = false;
 		int positive = 0;
 		 double relevancy = 0.0 ;
@@ -116,11 +119,11 @@ public class NLPPostaggerTest {
 		String[] pos = group[i].split("_");								//Break groups up
 		//System.out.println(pos[0]+pos[1]);  							//pos[1] is the part of speech
 		if ( 	pos[1].charAt(0)==78) {									//'N' words
-				System.out.println(pos[0]+" is a noun");
+				//System.out.println(pos[0]+" is a noun");
 				good = true;
 			} else
 				if(	pos[1].charAt(0)==86) {								//'V' words
-					System.out.println(pos[0]+" is a Verb");
+					//System.out.println(pos[0]+" is a Verb");
 					good = true;
 			}else{
 				//System.out.println(pos[0]+" is garbage\n");
@@ -129,14 +132,16 @@ public class NLPPostaggerTest {
 				for(int x=0; x<relevantWords.length; ++x){
 				    if(relevantWords[x].toLowerCase().compareTo(pos[0].toLowerCase()) == 0){
 				   //System.out.println("Matched on "+pos[0]+" !!This is really good!!");
-				    relevancy = (float)positive++/(float)i*100;
-				    	System.out.printf("\t\t\t\t%.2f%% Relevancy so far, %d count / %d total\n",relevancy,positive,i);
+				    relevancy = (double)++positive/(double)i*100.0;
+				    	System.out.printf("\t\t\t\t%.3f%% Relevancy so far, %d count / %d total\n",relevancy,positive,i);
 				    }
 				}
 				good = false;
 			}
 		}
-		System.out.printf("%d occurances in %d count,\t %.2f%% Relevancy\n",positive,count,relevancy);	
+		 relevancy = (double)positive/(double)count*100.0;
+		System.out.printf("%d occurances in %d count,\t %.3f%% Relevancy\n",positive,count,relevancy);	
+
 		
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
