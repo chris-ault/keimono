@@ -41,7 +41,7 @@ public class FTPDownloadFileDemo {
 
             
          // lists files and directories in the current working directory
-            FTPFile[] files = ftpClient.listFiles("/");
+            FTPFile[] files = ftpClient.listFiles("/data/2018");
              
             // iterates over the files and prints details for each
             DateFormat dateFormater = new SimpleDateFormat("MM-dd-YYYY HH:mm:ss");
@@ -87,7 +87,7 @@ public class FTPDownloadFileDemo {
 */
 
             // APPROACH #2: using InputStream retrieveFileStream(String)
-            String remoteFile2 = "/data/2018/techrepublic.com/resource-library_whitepapers__1522883673.html.json";
+            String remoteFile2 = "/data/2018/testdir.com/zaaatest.json";
             File downloadFile2 = new File("crawler2.0.txt");
             OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
             InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
