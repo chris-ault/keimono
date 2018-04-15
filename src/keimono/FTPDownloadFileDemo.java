@@ -87,7 +87,7 @@ public class FTPDownloadFileDemo {
 */
 
             // APPROACH #2: using InputStream retrieveFileStream(String)
-            String remoteFile2 = "/data/2018/testdir.com/zaaatest.json";
+            String remoteFile2 = "/data/2018/techrepublic.com/article__1520363674.html.json";
             File downloadFile2 = new File("crawler2.0.txt");
             OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
             InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);

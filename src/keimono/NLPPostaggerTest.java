@@ -20,7 +20,16 @@ import java.io.FileReader;
 import com.google.gson.*;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
+
+/* Possible throws FTPConnectionClosedException if client disconnects unintentionally
+ * Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 536
+	at keimono.NLPPostaggerTest.downloadAnalyzeDisplay(NLPPostaggerTest.java:183)
+	at keimono.NLPPostaggerTest.analyzeDir(NLPPostaggerTest.java:97)
+	at keimono.NLPPostaggerTest.main(NLPPostaggerTest.java:68)*/
+
+
 public class NLPPostaggerTest {
+	static Boolean online = false;
 	static String server = "www.crawler.giize.com";
     static int port = 21;
     static String user = "spiderftp";
@@ -37,6 +46,8 @@ public class NLPPostaggerTest {
 	public static void main(String[] args) throws IOException, ClassNotFoundException{
 
         FTPClient ftpClient = new FTPClient();
+        
+        if(online) {
         try {
 
             ftpClient.connect(server, port);
@@ -84,6 +95,11 @@ public class NLPPostaggerTest {
 	            ex.printStackTrace();
 	        }
 	    }
+	} else { //if ! online
+        System.out.println("We are offline");
+        downloadAnalyzeDisplay("crawler2.0.json");
+	}
+        
 	}
 	
 	
@@ -97,11 +113,7 @@ public class NLPPostaggerTest {
         downloadAnalyzeDisplay(dir+file.getName());
 		}
 	}
-
-
-
-
-
+	
 	public static String RBSI(BufferedReader buffIn) throws IOException { //ReadBigStringIn
         StringBuilder everything = new StringBuilder();
         String line;
@@ -115,21 +127,21 @@ public class NLPPostaggerTest {
 	public static void downloadAnalyzeDisplay(String address) throws JsonSyntaxException {
 		
 		FTPClient ftpClient = new FTPClient();
+		String theFile ="";
         try {
-
-            ftpClient.connect(server, port);
-            ftpClient.login(user, pass);
-            ftpClient.enterLocalPassiveMode();
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-		
-		System.out.println("The address is ["+address+"[");
+		System.out.println("The file to test is ["+address+"]");
+		if(online) {
+        ftpClient.connect(server, port);
+        ftpClient.login(user, pass);
+        ftpClient.enterLocalPassiveMode();
+        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 		// APPROACH #2: using InputStream retrieveFileStream(String)
         String remoteFile2 = address;
        //File downloadFile2 = new File("crawler2.0.txt");
         //OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
         InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
         byte[] bytesArray = new byte[4096];
-        String theFile = ""; // Not setting an an encoding for UTF-8 encoding;
+        theFile = ""; // Not setting an an encoding for UTF-8 encoding;
         int bytesRead = -1;
         while ((bytesRead = inputStream.read(bytesArray)) != -1) {
             //outputStream2.write(bytesArray, 0, bytesRead); 				 // Don't need to save the file anymore
@@ -140,11 +152,10 @@ public class NLPPostaggerTest {
         boolean  success = ftpClient.completePendingCommand();
         if (success) {
             //System.out.println("\n\n---File has been stored as string successfully.");
-           
         } //else ftp layer problem
         //outputStream2.close();
         inputStream.close();
-        
+		
         try {
             if (ftpClient.isConnected()) {
                 ftpClient.logout();
@@ -153,14 +164,14 @@ public class NLPPostaggerTest {
         } catch (IOException ex) {
             ex.printStackTrace();
         }	
-	
-
+        }
+        if(!online) {
 	//String sample = "This is a small piece of sample text";
 	//build stuff needed for Gson
 	//String path = "article__1522392853.html.json";
-    //BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
-	//String article = parse(RBSI(bufferedReader));  //This parses a file reader buffered reader, we now have a string instead
-    
+    BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
+	theFile = parse(RBSI(bufferedReader));  //This parses a file reader buffered reader, we now have a string instead
+        }
         
     try {    
     //  This parses the json string and removes non printable's that cause trouble
