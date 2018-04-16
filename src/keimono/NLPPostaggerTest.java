@@ -29,7 +29,7 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 
 public class NLPPostaggerTest {
-	static Boolean online = false;
+	static Boolean online = true;
 	static String server = "www.crawler.giize.com";
     static int port = 21;
     static String user = "spiderftp";
@@ -77,7 +77,7 @@ public class NLPPostaggerTest {
             	System.out.print("Analyzing "+curDir+" File "+files);
 
             	//Analyze Directory
-            	//analyzeDir(curDir, files);
+            	analyzeDir(curDir, files);
 
                //Analyze single Remote file
                //downloadAnalyzeDisplay("/data/2018/techrepublic.com/article_10-tech-tools-that-_e43ddd757a8017e07f7bd538b69ac344__ftag=TRE684d531&bhid=27811261207986488769636916332780_1522843677.html.json");
@@ -198,7 +198,7 @@ public class NLPPostaggerTest {
 	for(int i=0;i<count;i++) {										//Loop for each part
 	String[] group = tagged.split(" ");								//Separate words
 	//System.out.println(group[i]);
-	System.out.println("i:"+i+" < count:"+count);
+	//System.out.println("i:"+i+" < count:"+count);
 	String[] pos = group[i].split("_");								//Break groups up
 	//System.out.println(pos[0]+pos[1]);  							//pos[1] is the part of speech
 	if ( 	pos[1].charAt(0)==78) {									//'N' words
@@ -216,14 +216,14 @@ public class NLPPostaggerTest {
 			    if(relevantWords[x].toLowerCase().compareTo(pos[0].toLowerCase()) == 0){
 			   //System.out.println("Matched on "+pos[0]+" !!This is really good!!");
 			    relevancy = (double)++positive/(double)i*100.0;
-			    	System.out.printf("\t\t\t\t%.3f%% Relevancy so far, %d count / %d total\n",relevancy,positive,i);
+			    	System.out.printf("\t\t\t\t%%d count / %d total\n",positive,i);
 			    }
 			}
 			good = false;
 		}
 	}
 	 relevancy = (double)positive/(double)count*100.0;
-	System.out.printf("%d occurances in %d count,\t %.3f%% Relevancy\n\n",positive,count,relevancy);
+	System.out.printf("%d occurances in %d count,\t \n\n",positive,count);
     } catch (JsonSyntaxException j) {
     	problemFile++;
     	System.out.println("Json Problems in file "+address+"\n\n");
