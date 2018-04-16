@@ -62,9 +62,8 @@ public class NLPPostaggerTest {
             FTPFile[] files = ftpClient.listFiles(curDir+"*.json");
              
             // iterates over the files and prints details for each
-            DateFormat dateFormater = new SimpleDateFormat("MM-dd-YYYY HH:mm:ss");
-          
-            //Directory Listing
+            //DateFormat dateFormater = new SimpleDateFormat("MM-dd-YYYY HH:mm:ss");
+           //Directory Listing
             for (FTPFile file : files) {
                 String details = file.getName();
                 if (file.isDirectory()) {
@@ -76,8 +75,12 @@ public class NLPPostaggerTest {
             } 
             
             	System.out.print("Analyzing "+curDir+" File "+files);
-               analyzeDir(curDir, files);  
-            //downloadAnalyzeDisplay("/data/2018/techrepublic.com/resource-library_whitepapers__1522883673.html.json");
+               
+            	//Analyze Directory
+            	//analyzeDir(curDir, files);  
+            
+               //Analyze single Remote file
+               //downloadAnalyzeDisplay("/data/2018/techrepublic.com/article_10-tech-tools-that-_e43ddd757a8017e07f7bd538b69ac344__ftag=TRE684d531&bhid=27811261207986488769636916332780_1522843677.html.json");
             System.out.println("You had "+problemFile+" files that couldn't be analyzed due to JSON parsing");
          
 		
@@ -95,9 +98,10 @@ public class NLPPostaggerTest {
 	            ex.printStackTrace();
 	        }
 	    }
-	} else { //if ! online
+	} else { 
+		//Analyze Local file OFFLINE
         System.out.println("We are offline");
-        downloadAnalyzeDisplay("crawler2.0.json");
+        downloadAnalyzeDisplay("failfile.txt");
 	}
         
 	}
@@ -140,13 +144,13 @@ public class NLPPostaggerTest {
        //File downloadFile2 = new File("crawler2.0.txt");
         //OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
         InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
-        byte[] bytesArray = new byte[4096];
+        byte[] bytesArray = new byte[10000];
         theFile = ""; // Not setting an an encoding for UTF-8 encoding;
         int bytesRead = -1;
         while ((bytesRead = inputStream.read(bytesArray)) != -1) {
             //outputStream2.write(bytesArray, 0, bytesRead); 				 // Don't need to save the file anymore
 
-        	theFile += new String(bytesArray, guessEncoding(bytesArray)); 	// This is more than likely just "UTF-8" but this is safer
+        	theFile += new String(bytesArray, guessEncoding(bytesArray)); 	// This is more than likely just "UTF-8" but guess encoding is safe
         }
         //System.out.println("---Encoding of File appears to be" + guessEncoding(bytesArray));
         boolean  success = ftpClient.completePendingCommand();
@@ -170,11 +174,13 @@ public class NLPPostaggerTest {
 	//build stuff needed for Gson
 	//String path = "article__1522392853.html.json";
     BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
-	theFile = parse(RBSI(bufferedReader));  //This parses a file reader buffered reader, we now have a string instead
+	theFile = RBSI(bufferedReader);  //This parses a file reader buffered reader, we now have a string instead
         }
         
-    try {    
-    //  This parses the json string and removes non printable's that cause trouble
+    try {  
+    	theFile.replaceAll("\\\\", "");		//System.out.println("Test "+theFile.replaceAll("\\\\", "")); // treats the first argument as a regex, so you have to double escape the backslash
+    	
+    	//  This parses the json string and removes non printable's that cause trouble
     String article = parse(theFile.replaceAll("\\p{C}", ""));
     //System.out.println("Stripped of nonprintables\n"+article);
     System.out.print("Tagging article now...");
@@ -191,6 +197,7 @@ public class NLPPostaggerTest {
 	for(int i=0;i<count;i++) {										//Loop for each part
 	String[] group = tagged.split(" ");								//Separate words
 	//System.out.println(group[i]);
+	System.out.println("i:"+i+" < count:"+count);
 	String[] pos = group[i].split("_");								//Break groups up
 	//System.out.println(pos[0]+pos[1]);  							//pos[1] is the part of speech
 	if ( 	pos[1].charAt(0)==78) {									//'N' words

@@ -41,7 +41,7 @@ public class FTPDownloadFileDemo {
 
             
          // lists files and directories in the current working directory
-            FTPFile[] files = ftpClient.listFiles("/data/2018");
+            FTPFile[] files = ftpClient.listFiles("/data/2018/techrepublic.com/article__1520363275.html.json");
              
             // iterates over the files and prints details for each
             DateFormat dateFormater = new SimpleDateFormat("MM-dd-YYYY HH:mm:ss");
@@ -51,7 +51,7 @@ public class FTPDownloadFileDemo {
                 if (file.isDirectory()) {
                     details = "[" + details + "]";
                 }
-                details += "\t\t" + file.getSize();
+                details += "\t\t" + file.getSize()+" bytes";
                 details += "\t\t" + dateFormater.format(file.getTimestamp().getTime());
                 System.out.println(details);
             } 
@@ -87,25 +87,26 @@ public class FTPDownloadFileDemo {
 */
 
             // APPROACH #2: using InputStream retrieveFileStream(String)
-            String remoteFile2 = "/data/2018/techrepublic.com/article__1520363674.html.json";
-            File downloadFile2 = new File("crawler2.0.txt");
+            String remoteFile2 = "/data/2018/techrepublic.com/article__1520363275.html.json";
+            File downloadFile2 = new File("failfile.txt");
             OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
             InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
             DataInputStream dis = new DataInputStream(inputStream);
             
-            byte[] bytesArray = new byte[4096];
-            String theFile = new String(bytesArray, "ISO-8859-1"); // for UTF-8 encoding;
+            byte[] bytesArray = new byte[1000];
+            String theFile = new String(bytesArray, "UTF-8"); // for UTF-8 encoding;
             int bytesRead = -1;
             while ((bytesRead = inputStream.read(bytesArray)) != -1) {
             	//System.out.println(dis.readUnsignedByte());
-            	            	theFile += new String(bytesArray, "ISO-8859-1");
+            	            	theFile += new String(bytesArray, "UTF-8");
                 outputStream2.write(bytesArray, 0, bytesRead);
             }
 
             boolean  success = ftpClient.completePendingCommand();
             if (success) {
                 System.out.println("File #3 has been stored as string successfully.");
-                System.out.println(theFile);
+                System.out.println(theFile.replaceAll("\\p{C}", ""));
+                System.out.println(theFile.length());
             }
             outputStream2.close();
             inputStream.close();
