@@ -41,12 +41,12 @@ public class NLPPostaggerTest {
 	static String[] relevantWords = {"database","state","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen"};
 	//Initialize the tagger
 	static MaxentTagger tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
-    
-    
+
+
 	public static void main(String[] args) throws IOException, ClassNotFoundException{
 
         FTPClient ftpClient = new FTPClient();
-        
+
         if(online) {
         try {
 
@@ -55,12 +55,12 @@ public class NLPPostaggerTest {
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-            
+
          // lists files and directories in the current working directory
             String rootDir = "/data/2018/";
             String curDir = rootDir		+	"techrepublic.com/";
             FTPFile[] files = ftpClient.listFiles(curDir+"*.json");
-             
+
             // iterates over the files and prints details for each
             //DateFormat dateFormater = new SimpleDateFormat("MM-dd-YYYY HH:mm:ss");
            //Directory Listing
@@ -72,19 +72,19 @@ public class NLPPostaggerTest {
                 details += "\t\t\t\t" + file.getSize()+"bytes";
                 //details += "\t\t" + dateFormater.format(file.getTimestamp().getTime());
                 System.out.println(details);
-            } 
-            
+            }
+
             	System.out.print("Analyzing "+curDir+" File "+files);
-               
+
             	//Analyze Directory
-            	//analyzeDir(curDir, files);  
-            
+            	//analyzeDir(curDir, files);
+
                //Analyze single Remote file
                //downloadAnalyzeDisplay("/data/2018/techrepublic.com/article_10-tech-tools-that-_e43ddd757a8017e07f7bd538b69ac344__ftag=TRE684d531&bhid=27811261207986488769636916332780_1522843677.html.json");
             System.out.println("You had "+problemFile+" files that couldn't be analyzed due to JSON parsing");
-         
-		
-        
+
+
+
 	    } catch (IOException ex) {
 	        System.out.println("Error: " + ex.getMessage());
 	        ex.printStackTrace();
@@ -98,18 +98,18 @@ public class NLPPostaggerTest {
 	            ex.printStackTrace();
 	        }
 	    }
-	} else { 
+	} else {
 		//Analyze Local file OFFLINE
         System.out.println("We are offline");
         downloadAnalyzeDisplay("failfile.txt");
 	}
-        
+
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	private static void analyzeDir(String dir,FTPFile files[]) {
 
 		for(FTPFile file : files ) {
@@ -117,7 +117,7 @@ public class NLPPostaggerTest {
         downloadAnalyzeDisplay(dir+file.getName());
 		}
 	}
-	
+
 	public static String RBSI(BufferedReader buffIn) throws IOException { //ReadBigStringIn
         StringBuilder everything = new StringBuilder();
         String line;
@@ -126,10 +126,10 @@ public class NLPPostaggerTest {
         }
         return everything.toString();
     }
-	
+
 
 	public static void downloadAnalyzeDisplay(String address) throws JsonSyntaxException {
-		
+
 		FTPClient ftpClient = new FTPClient();
 		String theFile ="";
         try {
@@ -159,7 +159,7 @@ public class NLPPostaggerTest {
         } //else ftp layer problem
         //outputStream2.close();
         inputStream.close();
-		
+
         try {
             if (ftpClient.isConnected()) {
                 ftpClient.logout();
@@ -167,7 +167,7 @@ public class NLPPostaggerTest {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-        }	
+        }
         }
         if(!online) {
 	//String sample = "This is a small piece of sample text";
@@ -176,12 +176,13 @@ public class NLPPostaggerTest {
     BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
 	theFile = RBSI(bufferedReader);  //This parses a file reader buffered reader, we now have a string instead
         }
-        
-    try {  
+
+    try {
     	theFile.replaceAll("\\\\", "");		//System.out.println("Test "+theFile.replaceAll("\\\\", "")); // treats the first argument as a regex, so you have to double escape the backslash
-    	
-    	//  This parses the json string and removes non printable's that cause trouble
-    String article = parse(theFile.replaceAll("\\p{C}", ""));
+
+    	//  This parses the json string and removes non printable's and extra '_' that cause trouble
+    String printable = parse(theFile.replaceAll("\\p{C}", ""));
+    String article = printable.replaceAll("_", "");
     //System.out.println("Stripped of nonprintables\n"+article);
     System.out.print("Tagging article now...");
 	String tagged = tagger.tagString(article);
@@ -222,13 +223,13 @@ public class NLPPostaggerTest {
 		}
 	}
 	 relevancy = (double)positive/(double)count*100.0;
-	System.out.printf("%d occurances in %d count,\t %.3f%% Relevancy\n\n",positive,count,relevancy);	
+	System.out.printf("%d occurances in %d count,\t %.3f%% Relevancy\n\n",positive,count,relevancy);
     } catch (JsonSyntaxException j) {
     	problemFile++;
     	System.out.println("Json Problems in file "+address+"\n\n");
         //j.printStackTrace();
-    }	
-	
+    }
+
     } catch (IOException ex) {
         System.out.println("Error: " + ex.getMessage());
         ex.printStackTrace();
@@ -244,7 +245,7 @@ public class NLPPostaggerTest {
         }
     }
 	}
-	
+
 
 
 	public static  String parse(String jsonLine) {
@@ -253,8 +254,8 @@ public class NLPPostaggerTest {
         String result = jobject.get("text").getAsString();
         return result;
     }
-    
-    
+
+
     public static String guessEncoding(byte[] bytes) {
         String DEFAULT_ENCODING = "UTF-8";
         org.mozilla.universalchardet.UniversalDetector detector =
@@ -268,7 +269,7 @@ public class NLPPostaggerTest {
         }
         return encoding;
     }
-    
+
 
 
 }
