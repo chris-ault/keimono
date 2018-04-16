@@ -77,7 +77,7 @@ public class NLPPostaggerTest {
             	System.out.print("Analyzing "+curDir+" File "+files);
 
             	//Analyze Directory
-            	analyzeDir(curDir, files);
+            	analyzeDir(curDir, files, ftpClient);
 
                //Analyze single Remote file
                //downloadAnalyzeDisplay("/data/2018/techrepublic.com/article_10-tech-tools-that-_e43ddd757a8017e07f7bd538b69ac344__ftag=TRE684d531&bhid=27811261207986488769636916332780_1522843677.html.json");
@@ -101,7 +101,7 @@ public class NLPPostaggerTest {
 	} else {
 		//Analyze Local file OFFLINE
         System.out.println("We are offline");
-        downloadAnalyzeDisplay("failfile.txt");
+        //downloadAnalyzeDisplay("failfile.txt");
 	}
 
 	}
@@ -110,12 +110,21 @@ public class NLPPostaggerTest {
 
 
 
-	private static void analyzeDir(String dir,FTPFile files[]) {
+	private static void analyzeDir(String dir,FTPFile files[], FTPClient client) {
 
-		for(FTPFile file : files ) {
-        System.out.println(dir+file.getName().toLowerCase());
-        downloadAnalyzeDisplay(dir+file.getName());
+		//int i = 0;
+		System.out.println("File count: " + files.length);
+		for(int i = 15583; i < files.length; i++){
+			System.out.println(i + " out of " + files.length);
+			System.out.println(dir+files[i].getName().toLowerCase());
+			downloadAnalyzeDisplay(dir+files[i].getName(), client);
 		}
+		/*for(FTPFile file : files ) {
+			System.out.println(i + " out of " + files.length);
+			System.out.println(dir+file.getName().toLowerCase());
+			downloadAnalyzeDisplay(dir+file.getName(), client);
+			i++;
+		}*/
 	}
 
 	public static String RBSI(BufferedReader buffIn) throws IOException { //ReadBigStringIn
@@ -128,17 +137,17 @@ public class NLPPostaggerTest {
     }
 
 
-	public static void downloadAnalyzeDisplay(String address) throws JsonSyntaxException {
+	public static void downloadAnalyzeDisplay(String address, FTPClient client) throws JsonSyntaxException {
 
-		FTPClient ftpClient = new FTPClient();
+		FTPClient ftpClient = client; //new FTPClient();
 		String theFile ="";
         try {
 		System.out.println("The file to test is ["+address+"]");
 		if(online) {
-        ftpClient.connect(server, port);
+        /*ftpClient.connect(server, port);
         ftpClient.login(user, pass);
         ftpClient.enterLocalPassiveMode();
-        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);*/
 		// APPROACH #2: using InputStream retrieveFileStream(String)
         String remoteFile2 = address;
        //File downloadFile2 = new File("crawler2.0.txt");
@@ -160,14 +169,14 @@ public class NLPPostaggerTest {
         //outputStream2.close();
         inputStream.close();
 
-        try {
+        /*try {
             if (ftpClient.isConnected()) {
                 ftpClient.logout();
                 ftpClient.disconnect();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+        }*/
         }
         if(!online) {
 	//String sample = "This is a small piece of sample text";
@@ -216,7 +225,7 @@ public class NLPPostaggerTest {
 			    if(relevantWords[x].toLowerCase().compareTo(pos[0].toLowerCase()) == 0){
 			   //System.out.println("Matched on "+pos[0]+" !!This is really good!!");
 			    relevancy = (double)++positive/(double)i*100.0;
-			    	System.out.printf("\t\t\t\t%%d count / %d total\n",positive,i);
+			    	System.out.printf("\t\t\t\t%d count / %d total\n",positive,i);
 			    }
 			}
 			good = false;
@@ -233,7 +242,7 @@ public class NLPPostaggerTest {
     } catch (IOException ex) {
         System.out.println("Error: " + ex.getMessage());
         ex.printStackTrace();
-    } finally {
+    } /*finally {
         try {
             if (ftpClient.isConnected()) {
             	System.out.println("Logging off FTP, you were connected");
@@ -243,16 +252,21 @@ public class NLPPostaggerTest {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
+    }*/
 	}
 
 
 
-	public static  String parse(String jsonLine) {
+	public static  String parse(String jsonLine) throws IOException {
         JsonElement jelement = new JsonParser().parse(jsonLine);
         JsonObject  jobject = jelement.getAsJsonObject();
-        String result = jobject.get("text").getAsString();
-        return result;
+        //System.out.println(jobject.toString());
+        if (!jobject.get("text").isJsonNull()){
+        	String result = jobject.get("text").getAsString();
+        	return result;
+        } else {
+        	throw new IOException();
+        }
     }
 
 
