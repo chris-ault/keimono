@@ -87,13 +87,13 @@ public class FTPDownloadFileDemo {
 */
 
             // APPROACH #2: using InputStream retrieveFileStream(String)
-            String remoteFile2 = "/data/2018/techrepublic.com/article__1520363275.html.json";
+            String remoteFile2 = "/data/2018/techrepublic.com/article__1522396006.html.json";
             File downloadFile2 = new File("failfile.txt");
             OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
             InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
             DataInputStream dis = new DataInputStream(inputStream);
             
-            byte[] bytesArray = new byte[1000];
+            byte[] bytesArray = new byte[40000];
             String theFile = new String(bytesArray, "UTF-8"); // for UTF-8 encoding;
             int bytesRead = -1;
             while ((bytesRead = inputStream.read(bytesArray)) != -1) {

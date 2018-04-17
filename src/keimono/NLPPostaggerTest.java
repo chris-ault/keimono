@@ -2,6 +2,7 @@ package keimono;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.file.FileSystem;
 import java.text.DateFormat;
@@ -29,16 +30,18 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 
 public class NLPPostaggerTest {
+	public String[] problemFiles;
 	static Boolean online = true;
 	static String server = "www.crawler.giize.com";
     static int port = 21;
     static String user = "spiderftp";
     static String pass = "hello123";
     private static int problemFile=0;
+    
 	//
 	//These are relevant words to seek for they are all converted to lower case before comparison.
 	//
-	static String[] relevantWords = {"database","state","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen"};
+	static String[] relevantWords = {"database","security","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen","breach"};
 	//Initialize the tagger
 	static MaxentTagger tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
 
@@ -71,7 +74,7 @@ public class NLPPostaggerTest {
                 }
                 details += "\t\t\t\t" + file.getSize()+"bytes";
                 //details += "\t\t" + dateFormater.format(file.getTimestamp().getTime());
-                System.out.println(details);
+                //System.out.println(details);
             }
 
             	System.out.print("Analyzing "+curDir+" File "+files);
@@ -114,8 +117,10 @@ public class NLPPostaggerTest {
 
 		//int i = 0;
 		System.out.println("File count: " + files.length);
-		for(int i = 15583; i < files.length; i++){
-			System.out.println(i + " out of " + files.length);
+		for(int i = 57300; i < files.length; i++){
+			float complete =  (float)i/(float)files.length*(float)100;
+			System.out.printf("%d out of %d %.4f%% complete\n", i, files.length,complete);
+			//System.out.printf(i + " out of " + files.length +" "+ (double)i/(double)files.length*(float)100 +"% complete");
 			System.out.println(dir+files[i].getName().toLowerCase());
 			downloadAnalyzeDisplay(dir+files[i].getName(), client);
 		}
@@ -153,13 +158,13 @@ public class NLPPostaggerTest {
        //File downloadFile2 = new File("crawler2.0.txt");
         //OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
         InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
-        byte[] bytesArray = new byte[10000];
+        byte[] bytesArray = new byte[40000];
         theFile = ""; // Not setting an an encoding for UTF-8 encoding;
         int bytesRead = -1;
         while ((bytesRead = inputStream.read(bytesArray)) != -1) {
             //outputStream2.write(bytesArray, 0, bytesRead); 				 // Don't need to save the file anymore
 
-        	theFile += new String(bytesArray, guessEncoding(bytesArray)); 	// This is more than likely just "UTF-8" but guess encoding is safe
+        	theFile += new String(bytesArray, "UTF-8"); 	// This is more than likely just "UTF-8" but guess encoding is safe
         }
         //System.out.println("---Encoding of File appears to be" + guessEncoding(bytesArray));
         boolean  success = ftpClient.completePendingCommand();
@@ -186,13 +191,15 @@ public class NLPPostaggerTest {
 	theFile = RBSI(bufferedReader);  //This parses a file reader buffered reader, we now have a string instead
         }
 
-    try {
-    	theFile.replaceAll("\\\\", "");		//System.out.println("Test "+theFile.replaceAll("\\\\", "")); // treats the first argument as a regex, so you have to double escape the backslash
-
+    try {	//Clean that text!
+    	/*theFile.replaceAll("\\\\", "");		//System.out.println("Test "+theFile.replaceAll("\\\\", "")); // treats the first argument as a regex, so you have to double escape the backslash
+    	theFile.replaceAll("\\p{C}", "");    	
+    	theFile.replaceAll("\\p{Cntrl}", " ");*/
+    	theFile = cleanTextContent(theFile);
     	//  This parses the json string and removes non printable's and extra '_' that cause trouble
-    String printable = parse(theFile.replaceAll("\\p{C}", ""));
+    System.out.println("Collected cleaned text: "+theFile);
+	String printable = parse(theFile);
     String article = printable.replaceAll("_", "");
-    //System.out.println("Stripped of nonprintables\n"+article);
     System.out.print("Tagging article now...");
 	String tagged = tagger.tagString(article);
 	int count = StringUtils.countMatches(tagged, "_"); 				//How many parts of speech?
@@ -233,9 +240,17 @@ public class NLPPostaggerTest {
 	}
 	 relevancy = (double)positive/(double)count*100.0;
 	System.out.printf("%d occurances in %d count,\t \n\n",positive,count);
+	
     } catch (JsonSyntaxException j) {
     	problemFile++;
-    	System.out.println("Json Problems in file "+address+"\n\n");
+
+    	System.out.println("Json Problems in file "+address+" & "+ problemFile+" problem files\n\n");
+
+    	//System.out.println("Problem files are:"+problemFiles.toString());
+    	//BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	//System.out.print("Okay? (y/n/literally anything at all");
+    	 //String s = br.readLine();
+    	// Runtime.getRuntime().exec("cls");
         //j.printStackTrace();
     }
 
@@ -284,6 +299,22 @@ public class NLPPostaggerTest {
         return encoding;
     }
 
+    private static String cleanTextContent(String text)
+    {
+        // strips off all non-ASCII characters
+        text = text.replaceAll("[^\\x00-\\x7F]", "");
+        
+        // replace all the ASCII control characters with space
+        text = text.replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", " ");
+         
+        // removes non-printable characters from Unicode
+        text = text.replaceAll("\\p{C}", "");
+     
+        // other
+        text = text.replaceAll("\\n"," ");
+        
+        return text.trim();
+    }
 
 
 }

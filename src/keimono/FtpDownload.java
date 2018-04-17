@@ -8,6 +8,7 @@ import org.apache.commons.net.ftp.*;
 
 public class FtpDownload {
 	private void ftpDownload() {
+		/*
 	    FTPClient ftp = null;
 	    try {
 	        ftp = new FTPClient();
@@ -85,5 +86,7 @@ public class FtpDownload {
 	    Log.i(TAG, "File size = " + fileSize);
 	    return fileSize;
 	}
+*/
 }
+
 }
