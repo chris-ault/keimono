@@ -30,7 +30,7 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 
 public class NLPPostaggerTest {
-	public String[] problemFiles;
+	public static int problemFiles;
 	static Boolean online = true;
 	static String server = "www.crawler.giize.com";
     static int port = 21;
@@ -84,7 +84,7 @@ public class NLPPostaggerTest {
 
                //Analyze single Remote file
                //downloadAnalyzeDisplay("/data/2018/techrepublic.com/article_10-tech-tools-that-_e43ddd757a8017e07f7bd538b69ac344__ftag=TRE684d531&bhid=27811261207986488769636916332780_1522843677.html.json");
-            System.out.println("You had "+problemFile+" files that couldn't be analyzed due to JSON parsing");
+            System.out.println("You had "+problemFile+" files that couldn't be analyzed due to JSON parsing or incomplete downloads");
 
 
 
@@ -117,14 +117,15 @@ public class NLPPostaggerTest {
 
 		//int i = 0;
 		System.out.println("File count: " + files.length);
-		for(int i = 57300; i < files.length; i++){
+		for(int i = 0; i < files.length; ++i){
 			float complete =  (float)i/(float)files.length*(float)100;
-			System.out.printf("%d out of %d %.4f%% complete\n", i, files.length,complete);
+			System.out.printf("\n\t\t%d out of %d\n %.4f%% complete\tWith %d problem files\n", i, files.length,complete,problemFile);
 			//System.out.printf(i + " out of " + files.length +" "+ (double)i/(double)files.length*(float)100 +"% complete");
 			System.out.println(dir+files[i].getName().toLowerCase());
 			downloadAnalyzeDisplay(dir+files[i].getName(), client);
 		}
-		/*for(FTPFile file : files ) {
+		/*	This is the old enhanced for loop for the array
+		 * for(FTPFile file : files ) {
 			System.out.println(i + " out of " + files.length);
 			System.out.println(dir+file.getName().toLowerCase());
 			downloadAnalyzeDisplay(dir+file.getName(), client);
@@ -158,7 +159,7 @@ public class NLPPostaggerTest {
        //File downloadFile2 = new File("crawler2.0.txt");
         //OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
         InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
-        byte[] bytesArray = new byte[40000];
+        byte[] bytesArray = new byte[100000];
         theFile = ""; // Not setting an an encoding for UTF-8 encoding;
         int bytesRead = -1;
         while ((bytesRead = inputStream.read(bytesArray)) != -1) {
@@ -197,7 +198,7 @@ public class NLPPostaggerTest {
     	theFile.replaceAll("\\p{Cntrl}", " ");*/
     	theFile = cleanTextContent(theFile);
     	//  This parses the json string and removes non printable's and extra '_' that cause trouble
-    System.out.println("Collected cleaned text: "+theFile);
+    if(getLastnCharacters(theFile,2).equals("\"}")) {
 	String printable = parse(theFile);
     String article = printable.replaceAll("_", "");
     System.out.print("Tagging article now...");
@@ -240,7 +241,11 @@ public class NLPPostaggerTest {
 	}
 	 relevancy = (double)positive/(double)count*100.0;
 	System.out.printf("%d occurances in %d count,\t \n\n",positive,count);
-	
+    }
+    else {
+    	System.out.println("Incomplete download! Error count is "+ ++problemFile +"\n\n");;
+    	
+    }
     } catch (JsonSyntaxException j) {
     	problemFile++;
 
@@ -316,5 +321,14 @@ public class NLPPostaggerTest {
         return text.trim();
     }
 
-
+    public static String getLastnCharacters(String inputString, 
+            int subStringLength){
+int length = inputString.length();
+if(length <= subStringLength){
+return inputString;
+}
+int startIndex = length-subStringLength;
+return inputString.substring(startIndex);
+}
+    
 }
