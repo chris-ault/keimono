@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.UnknownHostException;
 import java.nio.file.FileSystem;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,7 +46,7 @@ public class NLPPostaggerTest {
 	static MaxentTagger tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
 
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException,UnknownHostException{
+	public static void main(String[] args) throws IOException, ClassNotFoundException{
 
         FTPClient ftpClient = new FTPClient();
 
@@ -89,11 +88,7 @@ public class NLPPostaggerTest {
 
 
 
-	    }catch(UnknownHostException ho){
-	    System.out.println("Server dead or no connection");
-	    }
-        
-        catch (IOException ex) {
+	    } catch (IOException ex) {
 	        System.out.println("Error: " + ex.getMessage());
 	        ex.printStackTrace();
 	    } finally {
@@ -123,7 +118,7 @@ public class NLPPostaggerTest {
 		//int i = 0;
 		System.out.println("File count: " + files.length);
 		for(int i = 0; i < files.length; ++i){
-			float complete =  	(float)i / (float)files.length*(float)100;
+			float complete =  (float)i/(float)files.length*(float)100;
 			System.out.printf("\n\t\t%d out of %d\n %.4f%% complete\tWith %d problem files\n", i, files.length,complete,problemFile);
 			//System.out.printf(i + " out of " + files.length +" "+ (double)i/(double)files.length*(float)100 +"% complete");
 			System.out.println(dir+files[i].getName().toLowerCase());
