@@ -1,2 +1,0 @@
-4100 Words in 15 Minutes = 277.6 Words per minute Using CoreNLPexample.java
-Tagged 4960 words in 4 seconds = 2607.78 words per second Using Postagger
