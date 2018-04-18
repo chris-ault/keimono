@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="homeBTN" layoutX="494.0" layoutY="322.0" mnemonicParsing="false" text="Back" />
+            <Group layoutX="420.0" layoutY="244.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0b0b054" height="56.0" layoutX="-111.0" layoutY="-15.0" stroke="BLACK" strokeType="INSIDE" width="274.0" />
+                  <TextField fx:id="wordToAdd" layoutX="-91.0" layoutY="1.0" />
+                  <Button fx:id="addWordBTN" layoutX="69.0" layoutY="1.0" mnemonicParsing="false" text="Add Keyword" />
+               </children>
+            </Group>
+            <ListView fx:id="wordList" layoutX="26.0" layoutY="66.0" prefHeight="281.0" prefWidth="274.0" />
+            <Button fx:id="removeWordBTN" layoutX="335.0" layoutY="322.0" mnemonicParsing="false" text="Remove Keyword" />
+            <Text layoutX="264.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Key Word List" />
+            <Text fx:id="hiddenText" layoutX="414.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidden Text" />
+            <ImageView fitHeight="125.0" fitWidth="259.0" layoutX="314.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../rsc/images/storeFile.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
