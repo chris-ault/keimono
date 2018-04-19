@@ -5,9 +5,12 @@ import java.io.IOException;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.sun.javafx.application.LauncherImpl;
+
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 import javafx.application.Application;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -22,10 +25,41 @@ public class Main extends Application {
 	//fxml
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private BorderPane initializerWindow;
-	//FTP and tagger
+	//FTP setup and info
 	private FTPClient ftpClient;
+	static String server = "www.crawler.giize.com";
+	static int port = 21;
+	static String user = "spiderftp";
+	static String pass = "hello123";
+	//text tagger
 	private MaxentTagger tagger;
+
+	@SuppressWarnings("restriction")
+	@Override
+	public void init() throws Exception {
+		//initialize ftp connection
+		ftpClient = new FTPClient();
+		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(1));
+		try{
+			ftpClient.connect(server, port);
+			ftpClient.login(user, pass);
+			ftpClient.enterLocalPassiveMode();
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(2));
+		} catch (IOException e){
+			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-1));
+			stop();
+		}
+		//initialize tagger
+		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(3));
+		try {
+			tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
+			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(4));
+		} catch (Exception e) {
+			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-2));
+			stop();
+		}
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -33,45 +67,10 @@ public class Main extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Keimono");
 
-		showInitializer();
-		//check and make sure everything got initialized
-		if(ftpClient == null || tagger == null){
-			//if something went wrong, don't do anything else
-		} else {
-			//otherwise continue
-			initRootLayout();
+		initRootLayout();
 
-			showMainView();
+		showMainView();
 
-		}
-
-	}
-
-	private void showInitializer() {
-		try{
-			//load initializer view
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/SplashScreen.fxml"));
-			AnchorPane splashScreen = (AnchorPane) loader.load();
-
-			//create stage for splash screen
-			Stage splashStage = new Stage();
-			splashStage.setTitle("Keimono Initializer");
-
-			//set up scene
-			Scene scene = new Scene(splashScreen);
-			splashStage.setScene(scene);
-			//give controller access to the main app and scene
-			SplashScreenController controller = loader.getController();
-			controller.setMainApp(this);
-			controller.setStage(splashStage);
-			//show stage and begin initializing process
-			splashStage.show();
-			controller.initializeFTP();
-
-		} catch (IOException e){
-			e.printStackTrace();
-		}
 
 	}
 
@@ -121,15 +120,9 @@ public class Main extends Application {
         return primaryStage;
     }
 
-    public void setFTP(FTPClient client){
-    	this.ftpClient = client;
-    }
 
-    public void setTagger(MaxentTagger tagger){
-    	this.tagger = tagger;
-    }
-
+	@SuppressWarnings("restriction")
 	public static void main(String[] args) {
-		launch(args);
+		LauncherImpl.launchApplication(Main.class, KeimonoPreloader.class, args);
 	}
 }

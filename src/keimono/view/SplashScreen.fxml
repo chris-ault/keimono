@@ -2,13 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.SplashScreenController">
    <children>
       <Label alignment="CENTER" layoutX="150.0" layoutY="36.0" text="Starting Keimono..." />
-      <Label fx:id="status" layoutX="38.0" layoutY="83.0" text="Status" />
+      <Label fx:id="status" layoutX="95.0" layoutY="83.0" prefHeight="17.0" prefWidth="200.0" text="Status" />
       <Button fx:id="quitBtn" layoutX="318.0" layoutY="161.0" mnemonicParsing="false" onAction="#closeProgram" onMouseClicked="#closeProgram" prefHeight="25.0" prefWidth="68.0" text="Quit" />
-      <Label fx:id="error" alignment="TOP_LEFT" layoutX="38.0" layoutY="100.0" prefHeight="56.0" prefWidth="313.0" scaleShape="false" text="Error" wrapText="true" />
+      <Label fx:id="error" alignment="TOP_LEFT" layoutX="94.0" layoutY="100.0" prefHeight="56.0" prefWidth="200.0" scaleShape="false" text="Error" wrapText="true" />
+      <ProgressBar fx:id="progressBar" layoutX="95.0" layoutY="65.0" prefWidth="200.0" progress="0.0" />
    </children>
 </AnchorPane>
