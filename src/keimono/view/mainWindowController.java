@@ -5,9 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.ListView;
-import keimono.main.Main;
+import keimono.Main;
 
-public class mainWindowController {
+public class MainWindowController {
+
 	@FXML
 	private Button aBtn;
 	@FXML
@@ -19,10 +20,10 @@ public class mainWindowController {
 
 	// Reference to the main application.
     private Main mainApp;
-    
+
 	/**
      * Is called by the main application to give a reference back to itself.
-     * 
+     *
      * @param mainApp
      */
     public void setMainApp(Main mainApp) {
@@ -31,5 +32,5 @@ public class mainWindowController {
         // Add observable list data to the table
         //personTable.setItems(mainApp.getPersonData());
     }
-	
+
 }
