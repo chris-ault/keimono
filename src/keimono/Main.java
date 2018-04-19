@@ -1,6 +1,7 @@
 package keimono;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -46,18 +47,26 @@ public class Main extends Application {
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(2));
+			TimeUnit.SECONDS.sleep(2);
+
 		} catch (IOException e){
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-1));
 			stop();
+			TimeUnit.SECONDS.sleep(5);
+			System.exit(1);
 		}
 		//initialize tagger
 		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(3));
 		try {
 			tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(4));
+			TimeUnit.SECONDS.sleep(2);
+
 		} catch (Exception e) {
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-2));
 			stop();
+			TimeUnit.SECONDS.sleep(5);
+			System.exit(1);
 		}
 	}
 
