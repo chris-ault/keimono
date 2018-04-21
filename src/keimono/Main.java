@@ -47,6 +47,7 @@ public class Main extends Application {
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(2));
+			System.out.println("Client addr: "+ftpClient);
 			TimeUnit.SECONDS.sleep(2);
 
 		} catch (IOException e){
@@ -106,14 +107,16 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/MainWindow.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
-
+            
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
 
             // Give the controller access to the main app.
             MainWindowController controller = loader.getController();
+            controller.setClient(ftpClient);
+           
             controller.setMainApp(this);
-
+            controller.listDir();
         } catch (IOException e) {
         	System.out.println("Problem in main view");
 
