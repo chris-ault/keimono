@@ -117,6 +117,7 @@ public class Main extends Application {
            
             controller.setMainApp(this);
             controller.listDir();
+            controller.listKeywords();
         } catch (IOException e) {
         	System.out.println("Problem in main view");
 
