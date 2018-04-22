@@ -116,10 +116,14 @@ public class Main extends Application {
             controller.setClient(ftpClient);
            
             controller.setMainApp(this);
+            
+            //meat and potaters
             controller.listDir();
             controller.listKeywords();
+            
+            
         } catch (IOException e) {
-        	System.out.println("Problem in main view");
+        	System.out.println("Problem in main view (io Exception)");
 
             e.printStackTrace();
         }
@@ -137,5 +141,9 @@ public class Main extends Application {
 	@SuppressWarnings("restriction")
 	public static void main(String[] args) {
 		LauncherImpl.launchApplication(Main.class, KeimonoPreloader.class, args);
+	}
+
+	public void goEditKeywords() {
+System.out.println("edit keywords here");		
 	}
 }

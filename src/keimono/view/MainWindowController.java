@@ -106,5 +106,12 @@ public class MainWindowController {
 		}
 		keywordsList.getItems().addAll(klist);
 	}
+	
+	public void editKeywords(){
+		mainApp.goEditKeywords();
+		
+		//System.out.println("Hello");
+		
+	}
 
 }
