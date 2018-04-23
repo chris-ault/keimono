@@ -105,7 +105,7 @@ public class Main extends Application {
 
 	}
 
-	private void showMainView() {
+	public void showMainView() {
 		try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -148,7 +148,32 @@ public class Main extends Application {
 		LauncherImpl.launchApplication(Main.class, KeimonoPreloader.class, args);
 	}
 
+	
+	
 	public void showEditKeywords() {
-		System.out.println("edit keywords here");
+		try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/WordsView.fxml"));
+            AnchorPane WordsView = (AnchorPane) loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(WordsView);
+
+            // Give the controller access to the main app.
+            WordsViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+
+            //meat and potaters
+            //controller.listDir();
+           // controller.listKeywords();
+
+
+        } catch (IOException e) {
+        	System.out.println("Problem in main view (io Exception)");
+
+            e.printStackTrace();
+        }
 	}
 }
