@@ -91,6 +91,10 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
 
+			//give controller access to main
+			RootLayoutController controller = loader.getController();
+			controller.setMainApp(this);
+
 			//Show the scene containing the root layout.
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -107,21 +111,22 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/MainWindow.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
-            
+
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
 
             // Give the controller access to the main app.
             MainWindowController controller = loader.getController();
             controller.setClient(ftpClient);
-           
+
             controller.setMainApp(this);
-            
+
+
             //meat and potaters
             controller.listDir();
             controller.listKeywords();
-            
-            
+
+
         } catch (IOException e) {
         	System.out.println("Problem in main view (io Exception)");
 
@@ -143,7 +148,7 @@ public class Main extends Application {
 		LauncherImpl.launchApplication(Main.class, KeimonoPreloader.class, args);
 	}
 
-	public void goEditKeywords() {
-System.out.println("edit keywords here");		
+	public void showEditKeywords() {
+		System.out.println("edit keywords here");
 	}
 }

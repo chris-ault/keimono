@@ -25,7 +25,7 @@ public class MainWindowController {
     private static int problemFile=0;
 	static String[] relevantWords = {"database","security","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen","breach"};
 
-	
+
 	@FXML
 	private Button aBtn;
 	@FXML
@@ -44,10 +44,13 @@ public class MainWindowController {
 
     @FXML
     private void initialize() {
-		
+
+    	mainApp = null;
+    	ftpClient = null;
+
     }
-	
-	
+
+
 	/**
      * Is called by the main application to give a reference back to itself.
      *
@@ -62,9 +65,10 @@ public class MainWindowController {
 
 	public void setClient(FTPClient ftpClient) {
 		this.ftpClient = ftpClient;
-		System.out.println("User addr: "+ftpClient);	
+		System.out.println("User addr: "+ftpClient);
 		}
-	
+
+
 	public void listDir() throws IOException, UnknownHostException{
         try {
         	/*
@@ -102,16 +106,9 @@ public class MainWindowController {
 
 	public void listKeywords() {
 		for (int i = 0; i <  relevantWords.length;i++){
-			klist.add(relevantWords[i]);			
+			klist.add(relevantWords[i]);
 		}
 		keywordsList.getItems().addAll(klist);
-	}
-	
-	public void editKeywords(){
-		mainApp.goEditKeywords();
-		
-		//System.out.println("Hello");
-		
 	}
 
 }
