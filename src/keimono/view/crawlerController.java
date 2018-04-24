@@ -120,7 +120,7 @@ public class crawlerController {
 		status.textProperty().bind(task.messageProperty());
 
 		//handle completed task
-		task.addEventFilter(WorkerStateEvent.WORKER_STATE_SUCCEEDED, new EventHandler<WorkerStateEvent>(){
+		task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, new EventHandler<WorkerStateEvent>(){
 			@Override
 			public void handle(WorkerStateEvent t){
 				status.textProperty().unbind();
