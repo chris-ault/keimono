@@ -9,6 +9,7 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
@@ -41,13 +42,15 @@ public class MainWindowController {
 	// Reference to the main application.
     private Main mainApp;
 	private FTPClient ftpClient;
+	
+	Boolean siteSelected;
 
     @FXML
     private void initialize() {
-
+    	siteSelected = false;
     	mainApp = null;
     	ftpClient = null;
-
+    	keywordsList.setEditable(false);
     }
 
 
@@ -110,5 +113,26 @@ public class MainWindowController {
 		}
 		keywordsList.getItems().addAll(klist);
 	}
-
+	
+	@FXML
+    private void selectSite() {
+    	ObservableList<Integer> selectedIndices =
+    			siteList.getSelectionModel().getSelectedIndices();
+    	if (!selectedIndices.isEmpty()) {
+	    	//System.out.println(MedicationList.medications[(int) selectedIndices.get(0)].getName());
+    		String site = slist.get((int) selectedIndices.get(0));
+	    	System.out.println(site.substring(site.indexOf("[")+1,site.indexOf("]")));
+	    	mainApp.setSelectedDirectory(site.substring(site.indexOf("[")+1,site.indexOf("]")));
+	    	siteSelected = true;
+	    	//confirmText.setText("Prescription "+MedicationList.medications[(int) selectedIndices.get(0)].getName()+" Added");
+    	}
+	}
+	
+	@FXML
+	private void parseSite(){
+		if(siteSelected){
+			mainApp.showCrawler();
+			
+		}
+	}
 }

@@ -32,6 +32,16 @@ public class Main extends Application {
 	static int port = 21;
 	static String user = "spiderftp";
 	static String pass = "hello123";
+	public String selectedDirectory = "";
+	
+	public String getSelectedDirectory() {
+		return selectedDirectory;
+	}
+
+	public void setSelectedDirectory(String selectedDirectory) {
+		this.selectedDirectory = selectedDirectory;
+	}
+
 	//text tagger
 	private MaxentTagger tagger;
 
@@ -171,7 +181,36 @@ public class Main extends Application {
 
 
         } catch (IOException e) {
-        	System.out.println("Problem in main view (io Exception)");
+        	System.out.println("Problem in edit keywords view (io Exception)");
+
+            e.printStackTrace();
+        }
+	}
+	
+	public void showCrawler(){
+		try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/crawler.fxml"));
+            AnchorPane CrawlerView = (AnchorPane) loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(CrawlerView);
+
+            // Give the controller access to the main app.
+            crawlerController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setClient(ftpClient);
+            controller.setTagger(tagger);
+            controller.nlParse();
+
+            //meat and potaters
+            //controller.listDir();
+           // controller.listKeywords();
+
+
+        } catch (IOException e) {
+        	System.out.println("Problem in crawler view (io Exception)");
 
             e.printStackTrace();
         }
