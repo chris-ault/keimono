@@ -48,7 +48,7 @@ public class Main extends Application {
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(2));
 			System.out.println("Client addr: "+ftpClient);
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(1);
 
 		} catch (IOException e){
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-1));
@@ -61,7 +61,7 @@ public class Main extends Application {
 		try {
 			tagger = new MaxentTagger("rsc\\english-bidirectional-distsim.tagger");
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(4));
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(1);
 
 		} catch (Exception e) {
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-2));
@@ -118,13 +118,10 @@ public class Main extends Application {
             // Give the controller access to the main app.
             MainWindowController controller = loader.getController();
             controller.setClient(ftpClient);
-
             controller.setMainApp(this);
-
 
             //meat and potaters
             controller.listDir();
-            controller.listKeywords();
 
 
         } catch (IOException e) {
@@ -148,8 +145,8 @@ public class Main extends Application {
 		LauncherImpl.launchApplication(Main.class, KeimonoPreloader.class, args);
 	}
 
-	
-	
+
+
 	public void showEditKeywords() {
 		try {
             // Load person overview.

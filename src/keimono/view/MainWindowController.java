@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 
 import javafx.scene.control.ListView;
 import keimono.Main;
+import keimono.model.KeywordListHandler;
 
 public class MainWindowController {
 
@@ -23,7 +24,7 @@ public class MainWindowController {
     static String user = "spiderftp";
     static String pass = "hello123";
     private static int problemFile=0;
-	static String[] relevantWords = {"database","security","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen","breach"};
+	//static String[] relevantWords = {"database","security","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen","breach"};
 
 
 	@FXML
@@ -36,17 +37,24 @@ public class MainWindowController {
 	private ListView<String> keywordsList;
 	@FXML
 	private ListView<String> siteList;
+
 	private ArrayList<String> slist = new ArrayList<String>();
-	ArrayList<String> klist = new ArrayList<String>();
+	private ArrayList<String> klist = new ArrayList<String>();
 	// Reference to the main application.
     private Main mainApp;
 	private FTPClient ftpClient;
+	private KeywordListHandler keywordHandler;
 
     @FXML
     private void initialize() {
 
-    	mainApp = null;
-    	ftpClient = null;
+    	try {
+    		keywordHandler = new KeywordListHandler();
+    	} catch(IOException e){
+    		System.out.println("Problem in KeywordListHandler");
+
+    	}
+    	listKeywords();
 
     }
 
@@ -58,25 +66,16 @@ public class MainWindowController {
      */
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
-
-        // Add observable list data to the table
-        //personTable.setItems(mainApp.getPersonData());
     }
 
 	public void setClient(FTPClient ftpClient) {
 		this.ftpClient = ftpClient;
 		System.out.println("User addr: "+ftpClient);
-		}
+	}
 
 
 	public void listDir() throws IOException, UnknownHostException{
         try {
-        	/*
-            ftpClient.connect(server, port);
-            ftpClient.login(user, pass);
-            ftpClient.enterLocalPassiveMode();
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			*/
 
          // lists files and directories in the current working directory
             String rootDir = "/data/2018/";
@@ -105,9 +104,7 @@ public class MainWindowController {
 
 
 	public void listKeywords() {
-		for (int i = 0; i <  relevantWords.length;i++){
-			klist.add(relevantWords[i]);
-		}
+		klist = keywordHandler.getKeywordList();
 		keywordsList.getItems().addAll(klist);
 	}
 

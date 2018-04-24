@@ -11,27 +11,24 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.WordsViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.WordsViewController">
    <children>
       <Pane prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Button fx:id="homeBTN" layoutX="494.0" layoutY="322.0" mnemonicParsing="false" onAction="#goMain" text="Back" />
-            <Group layoutX="420.0" layoutY="244.0">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0b0b054" height="56.0" layoutX="-111.0" layoutY="-15.0" stroke="BLACK" strokeType="INSIDE" width="274.0" />
-                  <TextField fx:id="wordToAdd" layoutX="-91.0" layoutY="1.0" />
-                  <Button fx:id="addWordBTN" layoutX="69.0" layoutY="1.0" mnemonicParsing="false" text="Add Keyword" />
-               </children>
-            </Group>
+            <Button fx:id="homeBTN" layoutX="494.0" layoutY="322.0" mnemonicParsing="false" onAction="#goMain" text="Done" />
+            <Group layoutX="420.0" layoutY="244.0" />
             <ListView fx:id="wordList" layoutX="26.0" layoutY="66.0" prefHeight="281.0" prefWidth="274.0" />
-            <Button fx:id="removeWordBTN" layoutX="335.0" layoutY="322.0" mnemonicParsing="false" text="Remove Keyword" />
-            <Text layoutX="264.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Key Word List" />
-            <Text fx:id="hiddenText" layoutX="414.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidden Text" />
-            <ImageView fitHeight="125.0" fitWidth="259.0" layoutX="314.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+            <Button fx:id="removeWordBTN" layoutX="335.0" layoutY="322.0" mnemonicParsing="false" onAction="#removeKeyword" text="Remove Keyword" />
+            <Text layoutX="135.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Key Words" />
+            <Text fx:id="hiddenText" layoutX="319.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+            <ImageView fitHeight="125.0" fitWidth="259.0" layoutX="314.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../rsc/images/storeFile.gif" />
+                  <Image url="@../../../rsc/images/earth2Store.gif" />
                </image>
             </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0b0b054" height="56.0" layoutX="317.0" layoutY="157.0" stroke="BLACK" strokeType="INSIDE" width="274.0" />
+            <TextField fx:id="wordToAdd" layoutX="326.0" layoutY="173.0" />
+            <Button fx:id="addWordBTN" layoutX="485.0" layoutY="173.0" mnemonicParsing="false" onAction="#addKeyword" text="Add Keyword" />
          </children>
       </Pane>
    </children>
