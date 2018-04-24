@@ -33,14 +33,6 @@ public class Main extends Application {
 	static String user = "spiderftp";
 	static String pass = "hello123";
 	public String selectedDirectory = "";
-	
-	public String getSelectedDirectory() {
-		return selectedDirectory;
-	}
-
-	public void setSelectedDirectory(String selectedDirectory) {
-		this.selectedDirectory = selectedDirectory;
-	}
 
 	//text tagger
 	private MaxentTagger tagger;
@@ -172,19 +164,15 @@ public class Main extends Application {
             controller.setMainApp(this);
 
 
-            //meat and potaters
-            //controller.listDir();
-           // controller.listKeywords();
-
-
         } catch (IOException e) {
         	System.out.println("Problem in edit keywords view (io Exception)");
 
             e.printStackTrace();
         }
 	}
-	
-	public void showCrawler(){
+
+	public void showCrawler(String directory){
+
 		try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -199,11 +187,7 @@ public class Main extends Application {
             controller.setMainApp(this);
             controller.setClient(ftpClient);
             controller.setTagger(tagger);
-            controller.nlParse();
-
-            //meat and potaters
-            //controller.listDir();
-           // controller.listKeywords();
+            controller.setSelectedDirectory(directory);
 
 
         } catch (IOException e) {

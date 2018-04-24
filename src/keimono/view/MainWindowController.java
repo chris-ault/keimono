@@ -44,8 +44,9 @@ public class MainWindowController {
 	// Reference to the main application.
     private Main mainApp;
 	private FTPClient ftpClient;
+	private KeywordListHandler keywordHandler;
 
-	
+
 	Boolean siteSelected;
 
    @FXML
@@ -54,7 +55,6 @@ public class MainWindowController {
     	mainApp = null;
     	ftpClient = null;
     	keywordsList.setEditable(false);
-    	private KeywordListHandler keywordHandler;
     	try {
     		keywordHandler = new KeywordListHandler();
     	} catch(IOException e){
@@ -115,26 +115,17 @@ public class MainWindowController {
 		klist = keywordHandler.getKeywordList();
 		keywordsList.getItems().addAll(klist);
 	}
-	
-	@FXML
-    private void selectSite() {
-    	ObservableList<Integer> selectedIndices =
-    			siteList.getSelectionModel().getSelectedIndices();
-    	if (!selectedIndices.isEmpty()) {
-	    	//System.out.println(MedicationList.medications[(int) selectedIndices.get(0)].getName());
-    		String site = slist.get((int) selectedIndices.get(0));
-	    	System.out.println(site.substring(site.indexOf("[")+1,site.indexOf("]")));
-	    	mainApp.setSelectedDirectory(site.substring(site.indexOf("[")+1,site.indexOf("]")));
-	    	siteSelected = true;
-	    	//confirmText.setText("Prescription "+MedicationList.medications[(int) selectedIndices.get(0)].getName()+" Added");
-    	}
-	}
-	
+
+
 	@FXML
 	private void parseSite(){
-		if(siteSelected){
-			mainApp.showCrawler();
-			
-		}
+		int selectedIndex = siteList.getSelectionModel().getSelectedIndex();
+    	if (selectedIndex >= 0) {
+    		String site = slist.get(selectedIndex);
+	    	System.out.println(site.substring(site.indexOf("[")+1,site.indexOf("]")));
+	    	mainApp.showCrawler(site.substring(site.indexOf("[")+1,site.indexOf("]")));
+    	} else {
+    		System.out.println("No site selected");
+    	}
 	}
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 
 import javafx.scene.text.Text;

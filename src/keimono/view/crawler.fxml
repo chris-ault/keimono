@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.crawlerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.crawlerController">
    <children>
-      <Pane prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="CrawlerPane" prefHeight="400.0" prefWidth="600.0">
          <children>
             <BorderPane prefHeight="400.0" prefWidth="600.0">
                <center>
@@ -63,6 +63,7 @@
                               <Image url="@../../../rsc/images/earth2Store.gif" />
                            </image>
                         </ImageView>
+                        <Button fx:id="parseBtn" layoutX="261.0" layoutY="2.0" mnemonicParsing="false" onAction="#nlParse" text="Begin Parse" />
                      </children>
                   </AnchorPane>
                </top>
