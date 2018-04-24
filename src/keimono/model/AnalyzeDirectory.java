@@ -20,6 +20,7 @@ import com.google.gson.JsonSyntaxException;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 import javafx.concurrent.Task;
+import keimono.view.crawlerController;
 
 public class AnalyzeDirectory extends Task<ArrayList<String>> {
 
@@ -93,11 +94,10 @@ public class AnalyzeDirectory extends Task<ArrayList<String>> {
 	public void downloadAnalyzeDisplay(String address) throws JsonSyntaxException {
 
 		String theFile ="";
+	int attempts=0;
+	do{
         try {
-		System.out.println("The file to test is ["+address+"]");
-		boolean online = true;
-		if(online ) {
-		// APPROACH #2: using InputStream retrieveFileStream(String)
+		System.out.println("The file to test is ["+address+"] on Attempt #"+attempts);
         String remoteFile2 = address;
        //File downloadFile2 = new File("crawler2.0.txt");
         //OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(downloadFile2));
@@ -117,14 +117,7 @@ public class AnalyzeDirectory extends Task<ArrayList<String>> {
         } //else ftp layer problem
         //outputStream2.close();
         inputStream.close();
-        }
-        if(!online) {
-	//String sample = "This is a small piece of sample text";
-	//build stuff needed for Gson
-	//String path = "article__1522392853.html.json";
-    BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
-	theFile = RBSI(bufferedReader);  //This parses a file reader buffered reader, we now have a string instead
-        }
+
 
     try {	//Clean that text!
     	/*theFile.replaceAll("\\\\", "");		//System.out.println("Test "+theFile.replaceAll("\\\\", "")); // treats the first argument as a regex, so you have to double escape the backslash
@@ -173,15 +166,22 @@ public class AnalyzeDirectory extends Task<ArrayList<String>> {
 			good = false;
 		}
 	}
-	 relevancy = (double)positive/(double)count*100.0;
+	
+	relevancy = (double)positive/(double)count*100.0;
 	System.out.printf("%d occurances in %d count,\t \n\n",positive,count);
 	filesCompleted++;
+	//results.Add(site("a","b","c","d",1,2));
+	return;
+	
+	
 	//Increment progress when file is parsed
+    }else{
+    	attempts++;
     }
-    else {
+    if(attempts==3){
     	System.out.println("Incomplete download! Error count is "+ ++problemFile +"\n\n");;
     	filesCompleted++;
-
+    	return;
     }
     } catch (JsonSyntaxException j) {
     	problemFile++;
@@ -194,6 +194,7 @@ public class AnalyzeDirectory extends Task<ArrayList<String>> {
         System.out.println("Error: " + ex.getMessage());
         ex.printStackTrace();
     }
+	}while(attempts<4);
 	}
 
 
