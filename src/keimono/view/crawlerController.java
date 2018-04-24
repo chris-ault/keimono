@@ -64,7 +64,7 @@ public class crawlerController {
 	private String selectedDirectory;
 	private KeywordListHandler keywordHandler;
 	private AnalyzeDirectory task;
-
+	public ArrayList <site> results = new ArrayList<site>();
 
 	@FXML
 	private void initialize() {
