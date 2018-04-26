@@ -108,7 +108,7 @@ public class AnalyzeDirectory extends Task<ArrayList<Article>> {
 				// OutputStream outputStream2 = new BufferedOutputStream(new
 				// FileOutputStream(downloadFile2));
 				InputStream inputStream = ftpClient.retrieveFileStream(remoteFile2);
-				byte[] bytesArray = new byte[100000];
+				byte[] bytesArray = new byte[1000000];
 				theFile = ""; // Not setting an an encoding for UTF-8 encoding;
 				int bytesRead = -1;
 				while ((bytesRead = inputStream.read(bytesArray)) != -1) {
@@ -191,6 +191,7 @@ public class AnalyzeDirectory extends Task<ArrayList<Article>> {
 					}
 					relevancy = (double) positive / (double) count * 100.0;
 					System.out.printf("%d occurances in %d count,\t \n\n", positive, count);
+					theArticle.setCount();
 					taggedArticles.add(theArticle);
 					filesCompleted++;
 					// Increment progress when file is parsed

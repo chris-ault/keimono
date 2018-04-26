@@ -1,6 +1,7 @@
 package keimono;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.net.ftp.FTP;
@@ -19,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.AnchorPane;
 
 import keimono.view.*;
+import keimono.model.*;
 
 
 public class Main extends Application {
@@ -189,6 +191,30 @@ public class Main extends Application {
             controller.setTagger(tagger);
             controller.setSelectedDirectory(directory);
 
+
+        } catch (IOException e) {
+        	System.out.println("Problem in crawler view (io Exception)");
+
+            e.printStackTrace();
+        }
+	}
+	
+	public void showResults(ArrayList<Article> articles){
+
+		try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/resultsWindow.fxml"));
+            AnchorPane resultsWindow = (AnchorPane) loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(resultsWindow);
+
+            // Give the controller access to the main app.
+            resultsWindowController controller = loader.getController();
+            controller.setMainApp(this);
+           controller.setArticles(articles);
+           controller.listArticles();
 
         } catch (IOException e) {
         	System.out.println("Problem in crawler view (io Exception)");

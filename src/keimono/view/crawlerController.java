@@ -151,7 +151,7 @@ public class crawlerController {
 	
 	@FXML
 	private void showResults() {
-		//mainApp.showResults(taggedArticles);
+		mainApp.showResults(taggedArticles);
 	}
 
 }
