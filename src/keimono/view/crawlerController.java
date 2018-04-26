@@ -1,21 +1,8 @@
 package keimono.view;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import javafx.concurrent.WorkerStateEvent;
@@ -64,6 +51,7 @@ public class crawlerController {
 	private String selectedDirectory;
 	private KeywordListHandler keywordHandler;
 	private AnalyzeDirectory task;
+	private ArrayList<Article> taggedArticles;
 
 
 	@FXML
@@ -75,6 +63,7 @@ public class crawlerController {
 			e.printStackTrace();
 		}
 		setRelevantWords();
+		taggedArticles = new ArrayList<Article>();
 	}
 
 	private void setRelevantWords(){
@@ -123,6 +112,7 @@ public class crawlerController {
 		task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, new EventHandler<WorkerStateEvent>(){
 			@Override
 			public void handle(WorkerStateEvent t){
+				taggedArticles = task.getValue();
 				status.textProperty().unbind();
 				status.setText("Finished");
 				crawlPercent.progressProperty().unbind();
