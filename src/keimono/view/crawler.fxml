@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.crawlerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.crawlerController">
    <children>
       <Pane fx:id="CrawlerPane" prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -71,8 +71,9 @@
                   <AnchorPane prefHeight="105.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="parseBtn" layoutX="214.0" layoutY="40.0" mnemonicParsing="false" onAction="#beginParse" prefHeight="25.0" prefWidth="57.0" text="Start" />
-                        <Button disable="true" layoutX="430.0" layoutY="40.0" mnemonicParsing="false" text="Results" />
+                        <Button fx:id="resultsBtn" disable="true" layoutX="430.0" layoutY="40.0" mnemonicParsing="false" onAction="#showResults" text="Results" />
                         <Button fx:id="cancelBtn" disable="true" layoutX="334.0" layoutY="40.0" mnemonicParsing="false" onAction="#cancelParse" text="Cancel" />
+                        <Button fx:id="backBtn" layoutX="106.0" layoutY="40.0" mnemonicParsing="false" onAction="#showMain" text="Back" />
                      </children>
                   </AnchorPane>
                </bottom>

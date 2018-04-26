@@ -29,6 +29,10 @@ public class crawlerController {
 	@FXML
 	private Button cancelBtn;
 	@FXML
+	private Button backBtn;
+	@FXML
+	private Button resultsBtn;
+	@FXML
 	private Label status;
 	@FXML
 	private ProgressBar crawlPercent;
@@ -96,6 +100,7 @@ public class crawlerController {
 	@FXML
 	private void beginParse(){
 		parseBtn.setDisable(true);
+		backBtn.setDisable(true);
 		crawlPercent.setProgress(0);
 		cancelBtn.setDisable(false);
 
@@ -117,6 +122,9 @@ public class crawlerController {
 				status.setText("Finished");
 				crawlPercent.progressProperty().unbind();
 				crawlPercent.setProgress(1);
+				cancelBtn.setDisable(true);
+				backBtn.setDisable(false);
+				resultsBtn.setDisable(false);
 			}
 		});
 
@@ -128,10 +136,22 @@ public class crawlerController {
 	private void cancelParse(){
 		parseBtn.setDisable(false);
 		cancelBtn.setDisable(true);
+		backBtn.setDisable(false);
+		resultsBtn.setDisable(false);
 		task.cancel(true);
 		crawlPercent.progressProperty().unbind();
 		status.textProperty().unbind();
 		crawlPercent.setProgress(0);
+	}
+	
+	@FXML
+	private void showMain() {
+		mainApp.showMainView();
+	}
+	
+	@FXML
+	private void showResults() {
+		//mainApp.showResults(taggedArticles);
 	}
 
 }
