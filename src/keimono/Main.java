@@ -33,10 +33,10 @@ public class Main extends Application {
 	private HostServices hostServices = getHostServices();
 	//FTP setup and info
 	private FTPClient ftpClient;
-	static String server = "www.crawler.giize.com";
+	private String server;
 	static int port = 21;
-	static String user = "spiderftp";
-	static String pass = "hello123";
+	private String user;
+	private String pass;
 	public String selectedDirectory = "";
 
 	//text tagger
@@ -45,6 +45,18 @@ public class Main extends Application {
 	@SuppressWarnings("restriction")
 	@Override
 	public void init() throws Exception {
+		//get ftp configuration
+		try {
+			FTPConfigReader configReader = new FTPConfigReader();
+			ArrayList<String> config = configReader.getConfiguration();
+			this.server = config.get(0);
+			this.user = config.get(1);
+			this.pass = config.get(2);
+		} catch (IOException e){
+			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-1));
+			TimeUnit.SECONDS.sleep(5);
+			System.exit(1);
+		}
 		//initialize ftp connection
 		ftpClient = new FTPClient();
 		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(1));
@@ -246,9 +258,9 @@ public class Main extends Application {
             controller.setDialogStage(dialogStage);
             controller.setHostServices(hostServices);
             controller.setArticle(article);
-            controller.displayTitle();
             controller.displayArticleText();
             controller.displayKeywords();
+            controller.displayTitle();
 
             //show dialog and wait for user to close it
             dialogStage.showAndWait();

@@ -143,12 +143,12 @@ public class CrawlerController {
 		status.textProperty().unbind();
 		crawlPercent.setProgress(0);
 	}
-	
+
 	@FXML
 	private void showMain() {
 		mainApp.showMainView();
 	}
-	
+
 	@FXML
 	private void showResults() {
 		mainApp.showResults(taggedArticles);

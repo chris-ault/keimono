@@ -47,7 +47,7 @@ public class ArticleDetailViewController {
 	}
 
 	public void displayTitle(){
-		title.setText("Details - " + article.getTitle());
+		title.setText(article.getTitle() + " - Details");
 	}
 
 	public void displayArticleText(){
