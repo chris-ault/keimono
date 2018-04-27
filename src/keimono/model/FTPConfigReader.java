@@ -22,7 +22,7 @@ public class FTPConfigReader {
 			FileReader fr = new FileReader(configFile);
 			BufferedReader br = new BufferedReader(fr);
 			while((line = br.readLine())!=null){
-				if(line != null){
+				if(line != null && line.charAt(0)!= '#'){
 					String[] readLine = line.split(":");
 					config.add(readLine[1]);
 				}

@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.ResultsWindowController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.ResultsWindowController">
    <children>
       <Button fx:id="homeButton" layoutX="153.0" layoutY="345.0" mnemonicParsing="false" onAction="#goHome" text="Home" />
       <Button fx:id="detailsButtons" layoutX="397.0" layoutY="345.0" mnemonicParsing="false" onAction="#showDetails" text="View Details" />
       <Text layoutX="72.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Results" />
-      <TableView fx:id="articleTable" layoutX="72.0" layoutY="59.0" prefHeight="256.0" prefWidth="449.0">
+      <TableView fx:id="articleTable" layoutX="72.0" layoutY="59.0" prefHeight="256.0" prefWidth="449.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="79.0">
         <columns>
           <TableColumn fx:id="titleColumn" prefWidth="346.0" text="Title" />
-          <TableColumn fx:id="hitColumn" prefWidth="102.0" text="Relevant Hits" />
+          <TableColumn fx:id="hitColumn" prefWidth="102.0" resizable="false" sortType="DESCENDING" text="Relevant Hits" />
         </columns>
       </TableView>
       <Label fx:id="hiddenText" alignment="CENTER" layoutX="131.0" layoutY="323.0" prefHeight="17.0" prefWidth="332.0" text="Label" visible="false" />

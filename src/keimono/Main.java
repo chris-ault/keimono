@@ -65,11 +65,12 @@ public class Main extends Application {
 		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(1));
 		try{
 			ftpClient.connect(server, port);
+			System.out.println("FTP Server on address:"+server );
 			ftpClient.login(user, pass);
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(2));
-			System.out.println("Client addr: "+ftpClient);
+			//System.out.println("Client addr: "+ftpClient);
 			TimeUnit.SECONDS.sleep(1);
 
 		} catch (IOException e){

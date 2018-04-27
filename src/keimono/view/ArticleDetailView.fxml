@@ -6,14 +6,14 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.ArticleDetailViewController">
+<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.ArticleDetailViewController">
    <children>
-      <TextArea fx:id="articleText" editable="false" layoutX="25.0" layoutY="310.0" prefHeight="220.0" prefWidth="350.0" wrapText="true" />
+      <TextArea fx:id="articleText" editable="false" layoutX="25.0" layoutY="310.0" prefHeight="220.0" prefWidth="350.0" wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
       <Label layoutX="26.0" layoutY="291.0" text="Article Text" />
       <Label fx:id="title" alignment="TOP_LEFT" layoutX="26.0" layoutY="14.0" prefHeight="41.0" prefWidth="350.0" text="Details - " wrapText="true" />
       <ListView fx:id="keywordsList" layoutX="25.0" layoutY="75.0" prefHeight="200.0" prefWidth="350.0" />
       <Label layoutX="25.0" layoutY="55.0" text="Keywords Found" />
-      <Button fx:id="hyperlinkBtn" layoutX="44.0" layoutY="547.0" mnemonicParsing="false" onAction="#goToWebsite" text="Visit Website" />
-      <Button fx:id="closeBtn" layoutX="293.0" layoutY="547.0" mnemonicParsing="false" onAction="#closeWindow" text="Done" />
+      <Button fx:id="hyperlinkBtn" layoutX="44.0" layoutY="547.0" mnemonicParsing="false" onAction="#goToWebsite" text="Visit Website" AnchorPane.leftAnchor="50.0" />
+      <Button fx:id="closeBtn" layoutX="293.0" layoutY="547.0" mnemonicParsing="false" onAction="#closeWindow" text="Done" AnchorPane.rightAnchor="62.0" />
    </children>
 </AnchorPane>

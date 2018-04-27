@@ -1,3 +1,4 @@
-server:crawler.giize.com
+server:18.236.84.215
+#backup server 18.236.84.215 # crawler.giize.com
 UN:spiderftp
 PW:hello123

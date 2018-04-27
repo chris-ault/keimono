@@ -78,7 +78,7 @@ public class MainWindowController {
 
 	public void setClient(FTPClient ftpClient) {
 		this.ftpClient = ftpClient;
-		System.out.println("User addr: "+ftpClient);
+		//System.out.println("User addr: "+ftpClient);
 	}
 
 

@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.MainWindowController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keimono.view.MainWindowController">
    <children>
-      <ListView fx:id="siteList" layoutX="27.0" layoutY="62.0" prefHeight="270.0" prefWidth="224.0" />
-      <ListView fx:id="keywordsList" focusTraversable="false" layoutX="362.0" layoutY="62.0" prefHeight="270.0" prefWidth="224.0" />
-      <Button fx:id="bBtn" layoutX="228.0" layoutY="344.0" mnemonicParsing="false" onAction="#parseSite" text="Parse Selected Directory" />
-      <Text layoutX="72.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sites Available to Process" />
-      <Text layoutX="423.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keywords to search" />
+      <ListView fx:id="siteList" layoutX="27.0" layoutY="62.0" maxHeight="2000.0" maxWidth="1000.0" prefHeight="270.0" prefWidth="327.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="62.0" />
+      <ListView fx:id="keywordsList" focusTraversable="false" layoutX="362.0" layoutY="62.0" maxHeight="1000.0" maxWidth="224.0" prefHeight="270.0" prefWidth="224.0" AnchorPane.bottomAnchor="68.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="62.0" />
+      <Button fx:id="bBtn" layoutX="228.0" layoutY="344.0" mnemonicParsing="false" onAction="#parseSite" text="Parse Selected Directory" AnchorPane.bottomAnchor="31.0" />
+      <Text layoutX="72.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sites Available to Process" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="28.05078125" />
+      <Text layoutX="362.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keywords to search" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="28.05078125" />
    </children>
 </AnchorPane>

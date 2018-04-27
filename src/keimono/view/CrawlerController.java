@@ -94,7 +94,7 @@ public class CrawlerController {
 
 	public void setTagger(MaxentTagger tagger) {
 		this.tagger = tagger;
-		System.out.println("Tagger addr: "+tagger);
+		//System.out.println("Tagger addr: "+tagger);
 	}
 
 	@FXML
