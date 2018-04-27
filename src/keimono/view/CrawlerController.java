@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 
 public class CrawlerController {
 
-    private static int problemFile=0;
 	private String[] relevantWords;
 	private ArrayList<String> keywords = new ArrayList<String>();
 
@@ -50,8 +49,6 @@ public class CrawlerController {
 	private Main mainApp;
 	private FTPClient ftpClient;
 	private MaxentTagger tagger;
-	private static int fileCount=0;
-	private static int filesCompleted=0;
 	private String selectedDirectory;
 	private KeywordListHandler keywordHandler;
 	private AnalyzeDirectory task;

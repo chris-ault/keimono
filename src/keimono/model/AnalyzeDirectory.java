@@ -22,6 +22,7 @@ import javafx.concurrent.Task;
 
 import keimono.model.Article;
 
+@SuppressWarnings("unused")
 public class AnalyzeDirectory extends Task<ArrayList<Article>> {
 
 	private static int problemFile = 0;

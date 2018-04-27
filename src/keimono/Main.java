@@ -25,6 +25,7 @@ import keimono.view.*;
 import keimono.model.*;
 
 
+@SuppressWarnings("restriction")
 public class Main extends Application {
 
 	//fxml
@@ -45,7 +46,6 @@ public class Main extends Application {
 	/* (non-Javadoc)
 	 * @see javafx.application.Application#init()
 	 */
-	@SuppressWarnings("restriction")
 	@Override
 	public void init() throws Exception {
 		//get ftp configuration
@@ -161,7 +161,6 @@ public class Main extends Application {
     }
 
 
-	@SuppressWarnings("restriction")
 	public static void main(String[] args) {
 		LauncherImpl.launchApplication(Main.class, KeimonoPreloader.class, args);
 	}

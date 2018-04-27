@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import org.apache.commons.net.SocketClient;
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
@@ -19,14 +16,6 @@ import keimono.Main;
 import keimono.model.KeywordListHandler;
 
 public class MainWindowController {
-
-	static String server = "www.crawler.giize.com";
-    static int port = 21;
-    static String user = "spiderftp";
-    static String pass = "hello123";
-    private static int problemFile=0;
-	//static String[] relevantWords = {"database","security","appealing","Spyware","problem","rescue","suffer","infection","infecting","network","administrator","exploit","stolen","breach"};
-
 
 	@FXML
 	private Button aBtn;
