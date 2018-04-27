@@ -42,6 +42,9 @@ public class Main extends Application {
 	//text tagger
 	private MaxentTagger tagger;
 
+	/* (non-Javadoc)
+	 * @see javafx.application.Application#init()
+	 */
 	@SuppressWarnings("restriction")
 	@Override
 	public void init() throws Exception {
@@ -138,8 +141,6 @@ public class Main extends Application {
             MainWindowController controller = loader.getController();
             controller.setClient(ftpClient);
             controller.setMainApp(this);
-
-            //meat and potaters
             controller.listDir();
 
 

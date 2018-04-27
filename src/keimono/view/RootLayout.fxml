@@ -20,11 +20,6 @@
                   <MenuItem mnemonicParsing="false" onAction="#editKeywords" text="Edit Keywords" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Hi">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
         </menus>
       </MenuBar>
    </top>
