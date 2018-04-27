@@ -9,32 +9,32 @@ import javafx.beans.property.StringProperty;
 
 public class Article {
 
-	
-	
 	private final StringProperty title;
 	private StringProperty url;
 	private StringProperty filename;
 	private IntegerProperty hitcount;
 	private ArrayList<String> keywords;
-	
-	public Article(String t, String u, String f) {
+	private String text;
+
+	public Article(String t, String u, String f, String text) {
 		this.title = new SimpleStringProperty(t);
 		this.url = new SimpleStringProperty(u);
 		this.filename = new SimpleStringProperty(f);
+		this.text = text;
 		keywords = new ArrayList<String>();
 	}
-	
+
 	public void addKeywordHit(String keyword) {
-		
+
 		keywords.add(keyword);
-		
+
 	}
-	
+
 	//Called by crawlerController before sending to results page
 	public void setCount(){
 		this.hitcount = new SimpleIntegerProperty(keywords.size());
 	}
-	
+
 	public String getTitle(){
 		return title.get();
 	}
@@ -44,7 +44,7 @@ public class Article {
 	public StringProperty titleProperty(){
 		return title;
 	}
-	
+
 	public String getURL(){
 		return url.get();
 	}
@@ -54,7 +54,7 @@ public class Article {
 	public StringProperty urlProperty(){
 		return url;
 	}
-	
+
 	public String getFilename(){
 		return filename.get();
 	}
@@ -64,7 +64,7 @@ public class Article {
 	public StringProperty filenameProperty(){
 		return filename;
 	}
-	
+
 	public int getHitcount(){
 		return hitcount.get();
 	}
@@ -74,5 +74,12 @@ public class Article {
 	public IntegerProperty hitcountProperty(){
 		return hitcount;
 	}
-	
+
+	public ArrayList<String> getKeywords(){
+		return keywords;
+	}
+
+	public String getText(){
+		return text;
+	}
 }

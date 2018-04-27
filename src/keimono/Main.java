@@ -8,12 +8,14 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.sun.javafx.application.LauncherImpl;
+import javafx.application.HostServices;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -28,6 +30,7 @@ public class Main extends Application {
 	//fxml
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	private HostServices hostServices = getHostServices();
 	//FTP setup and info
 	private FTPClient ftpClient;
 	static String server = "www.crawler.giize.com";
@@ -178,14 +181,14 @@ public class Main extends Application {
 		try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/crawler.fxml"));
+            loader.setLocation(Main.class.getResource("view/Crawler.fxml"));
             AnchorPane CrawlerView = (AnchorPane) loader.load();
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(CrawlerView);
 
             // Give the controller access to the main app.
-            crawlerController controller = loader.getController();
+            CrawlerController controller = loader.getController();
             controller.setMainApp(this);
             controller.setClient(ftpClient);
             controller.setTagger(tagger);
@@ -198,26 +201,60 @@ public class Main extends Application {
             e.printStackTrace();
         }
 	}
-	
+
 	public void showResults(ArrayList<Article> articles){
 
 		try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/resultsWindow.fxml"));
+            loader.setLocation(Main.class.getResource("view/ResultsWindow.fxml"));
             AnchorPane resultsWindow = (AnchorPane) loader.load();
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(resultsWindow);
 
             // Give the controller access to the main app.
-            resultsWindowController controller = loader.getController();
+            ResultsWindowController controller = loader.getController();
             controller.setMainApp(this);
            controller.setArticles(articles);
            controller.listArticles();
 
         } catch (IOException e) {
         	System.out.println("Problem in crawler view (io Exception)");
+
+            e.printStackTrace();
+        }
+	}
+
+	public void showArticleDetails(Article article){
+		try {
+            // Load fxml and create a new stage for the popup dialogue
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/ArticleDetailView.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            //create dialogue stage
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Article Details");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            //set up controller
+            ArticleDetailViewController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setHostServices(hostServices);
+            controller.setArticle(article);
+            controller.displayTitle();
+            controller.displayArticleText();
+            controller.displayKeywords();
+
+            //show dialog and wait for user to close it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+        	System.out.println("Problem in article detail view (io Exception)");
 
             e.printStackTrace();
         }
